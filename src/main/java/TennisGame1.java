@@ -45,16 +45,9 @@ public class TennisGame1 implements TennisGame {
       else if (minusResult >= 2) score = "Win for player1";
       else score = "Win for player2";
     } else {
-      for (int i = 1; i < 3; i++) {
-        if (i == 1) {
-          tempScore = m_score1;
-        } else {
-          score += "-";
-          tempScore = m_score2;
-        }
-
-        score += Score.findByPoint(tempScore);
-      }
+      score += Score.findByPoint(m_score1);
+      score += "-";
+      score += Score.findByPoint(m_score2);
     }
     return score;
   }
