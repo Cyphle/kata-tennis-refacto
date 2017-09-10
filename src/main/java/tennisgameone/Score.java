@@ -7,7 +7,8 @@ public enum Score {
   Fifteen(1),
   Thirty(2),
   Forty(3),
-  Deuce(4);
+  Deuce(4),
+  All(5);
 
   public final int point;
 
@@ -27,7 +28,7 @@ public enum Score {
             .filter(score -> score.point <= 2)
             .filter(score -> score.point == pointToFind)
             .findAny()
-            .map(score -> score.toString() + "-All")
+            .map(score -> score.toString() + "-" + All.toString())
             .orElse(Deuce.toString());
   }
 }

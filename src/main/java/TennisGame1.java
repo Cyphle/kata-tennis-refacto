@@ -22,25 +22,24 @@ public class TennisGame1 implements TennisGame {
   public String getScore() {
     if (doesPlayersHaveSameScore()) return Score.findByPointForSamePoint(m_score1);
 
-    if (m_score1 >= 4 || m_score2 >= 4) {
+    if (hasOnePlayerAdvantageOrWon()) {
       int pointDifference = m_score1 - m_score2;
-
-      if (pointDifference == 1) {
-        return "Advantage player1";
-      }
-
-      if (pointDifference == -1) {
-        return "Advantage player2";
-      }
-
-      if (pointDifference >= 2) {
-        return "Win for player1";
-      }
-
-      return "Win for player2";
-    } else {
-      return Score.findByPoint(m_score1) + "-" + Score.findByPoint(m_score2);
+      return getMessageAdvantageOrWin(pointDifference) + getAdvantagedPlayer(pointDifference);
     }
+
+    return Score.findByPoint(m_score1) + "-" + Score.findByPoint(m_score2);
+  }
+
+  private String getMessageAdvantageOrWin(int pointDifference) {
+    return Math.abs(pointDifference) == 1 ? "Advantage " : "Win for ";
+  }
+
+  private String getAdvantagedPlayer(int pointDifference) {
+    return pointDifference > 0 ? "player1" : "player2";
+  }
+
+  private boolean hasOnePlayerAdvantageOrWon() {
+    return m_score1 >= 4 || m_score2 >= 4;
   }
 
   private boolean doesPlayersHaveSameScore() {
