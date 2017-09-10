@@ -20,19 +20,14 @@ public class TennisGame2 implements TennisGame {
       score = Score.findScoreByPoint(P1point);
       score += "-All";
     }
-    if ((P1point > 0 && P2point == 0) || P2point > 0 && P1point == 0) {
+    if (P1point > P2point && (P2point == 0 || P1point < 4)) {
       P1res = Score.findScoreByPoint(P1point);
       P2res = Score.findScoreByPoint(P2point);
       score = P1res + "-" + P2res;
     }
-    if (P1point > P2point && P1point < 4) {
-      P1res = Score.findScoreByPoint(P1point);
+    if (P2point > P1point && (P1point == 0 || P2point < 4)) {
       P2res = Score.findScoreByPoint(P2point);
-      score = P1res + "-" + P2res;
-    }
-    if (P2point > P1point && P2point < 4) {
-      P1res = Score.findScoreByPoint(P1point);
-      P2res = Score.findScoreByPoint(P2point);
+      P1res = Score.findScoreByPoint(P1point);;
       score = P1res + "-" + P2res;
     }
 
