@@ -1,33 +1,28 @@
 import tennisgameone.Score;
 
 public class TennisGame1 implements TennisGame {
-
-  private int m_score1 = 0;
-  private int m_score2 = 0;
-  private String player1Name;
-  private String player2Name;
-
-  public TennisGame1(String player1Name, String player2Name) {
-    this.player1Name = player1Name;
-    this.player2Name = player2Name;
-  }
+  private int pointsOfPlayerOne = 0;
+  private int pointsOfPlayerTwo = 0;
 
   public void wonPoint(String playerName) {
-    if (playerName == "player1")
-      m_score1 += 1;
+    if (playerOneMarkedThePoint(playerName))
+      pointsOfPlayerOne += 1;
     else
-      m_score2 += 1;
+      pointsOfPlayerTwo += 1;
   }
 
   public String getScore() {
-    if (doesPlayersHaveSameScore()) return Score.findByPointForSamePoint(m_score1);
+    if (playersHaveSameScore()) return Score.findByPointForSamePoint(pointsOfPlayerOne);
 
-    if (hasOnePlayerAdvantageOrWon()) {
-      int pointDifference = m_score1 - m_score2;
-      return getMessageAdvantageOrWin(pointDifference) + getAdvantagedPlayer(pointDifference);
-    }
+    if (thereIsAdvantageOrAWin())
+      return getMessageAdvantageOrWin(pointsOfPlayerOne - pointsOfPlayerTwo)
+              + getAdvantagedPlayer(pointsOfPlayerOne - pointsOfPlayerTwo);
 
-    return Score.findByPoint(m_score1) + "-" + Score.findByPoint(m_score2);
+    return Score.findByPoint(pointsOfPlayerOne) + "-" + Score.findByPoint(pointsOfPlayerTwo);
+  }
+
+  private boolean playerOneMarkedThePoint(String playerName) {
+    return playerName.equals("player1");
   }
 
   private String getMessageAdvantageOrWin(int pointDifference) {
@@ -38,11 +33,11 @@ public class TennisGame1 implements TennisGame {
     return pointDifference > 0 ? "player1" : "player2";
   }
 
-  private boolean hasOnePlayerAdvantageOrWon() {
-    return m_score1 >= 4 || m_score2 >= 4;
+  private boolean thereIsAdvantageOrAWin() {
+    return pointsOfPlayerOne >= 4 || pointsOfPlayerTwo >= 4;
   }
 
-  private boolean doesPlayersHaveSameScore() {
-    return m_score1 == m_score2;
+  private boolean playersHaveSameScore() {
+    return pointsOfPlayerOne == pointsOfPlayerTwo;
   }
 }
