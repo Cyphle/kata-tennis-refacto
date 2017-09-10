@@ -20,10 +20,10 @@ public class TennisGame1 implements TennisGame {
   }
 
   public String getScore() {
+    if (doesPlayersHaveSameScore()) return Score.findByPointForSamePoint(m_score1);
+
     String score = "";
-    if (m_score1 == m_score2) {
-        score = Score.findByPointForSamePoint(m_score1);
-    } else if (m_score1 >= 4 || m_score2 >= 4) {
+    if (m_score1 >= 4 || m_score2 >= 4) {
       int minusResult = m_score1 - m_score2;
       if (minusResult == 1) score = "Advantage player1";
       else if (minusResult == -1) score = "Advantage player2";
@@ -35,5 +35,9 @@ public class TennisGame1 implements TennisGame {
       score += Score.findByPoint(m_score2);
     }
     return score;
+  }
+
+  private boolean doesPlayersHaveSameScore() {
+    return m_score1 == m_score2;
   }
 }
